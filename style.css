@@ -1,38 +1,38 @@
-      body {
-            font-family: 'Roboto Mono', monospace;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 60vh;
-            margin: 0;
-        }
+body {
+    font-family: 'Roboto Mono', monospace;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    margin: 0;
+}
 
-        .container {
-            text-align: center;
-        }
+.container {
+    text-align: center;
+}
 
-        h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 4rem;
-            color: #333;
-            margin-bottom: 0.2em;
-        }
+h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 4rem;
+    color: #333;
+    margin-bottom: 0.2em;
+}
 
-        p {
-            font-size: 1.2rem;
-            color: #666;
-            max-width: 600px;
-            margin-bottom: 3em;
-        }
+p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    margin-bottom: 3em;
+}
 
 
-        a {
-            font-size: 1.0rem;
-            color: #333;
-            text-decoration: underline;
-        }
+a {
+    font-size: 1.0rem;
+    color: #333;
+    text-decoration: underline;
+}
 
-        a:hover {
-            color: #555;
-        }
+a:hover {
+    color: #555;
+}
