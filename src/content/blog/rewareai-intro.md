@@ -2,9 +2,9 @@
 title: "Reware AI: Understanding the Landscape of Application Security"
 description: "A critical examination of the blind spots in traditional SAST and DAST tools, highlighting why Reware AI is rethinking software security to uncover vulnerabilities that others miss."
 pubDate: 2025-05-28T00:00:00Z
-thumbnail: "/blog-images/security-scan.jpg"
+thumbnail: "/blog-images/intro.png"
 author: "Reza Hazhirpasand"
-tags: ["Security"]
+tags: ["Application Security", "SecurityTesting"]
 ---
 
 At **Reware AI**, we're on a mission to redefine how businesses approach software security. As we embark on this exciting journey, one of our foundational steps has been to rigorously test and understand the landscape of existing security tools. In our rigorous testings, we've come to realize that traditional software security tools, particularly **Static Application Security Testing (SAST)** and **Dynamic Application Security Testing (DAST)**, often struggle with a significant challenge: their inherent limitations leave many critical vulnerabilities lurking in the blind spots of the codebase.

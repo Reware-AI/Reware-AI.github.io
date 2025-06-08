@@ -8,7 +8,7 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 	<nav class="navbar">
 		<div class="nav-container">
 			<div class="nav-logo">
-				<h2>RewareAI</h2>
+				<h2>Reware AI</h2>
 			</div>
 			<ul class="nav-menu">
 				<li class="nav-item">
@@ -84,6 +84,26 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 
 				<div class="feature-card">
 					<div class="feature-icon">
+						<div class="icon-bg noise-icon">🔇</div>
+					</div>
+					<h3 class="feature-title">Less Noise</h3>
+					<p class="feature-description">
+						Dramatically reduced false positives and intelligent filtering to focus on real security issues that matter.
+					</p>
+				</div>
+
+				<div class="feature-card">
+					<div class="feature-icon">
+						<div class="icon-bg logic-icon">🔍</div>
+					</div>
+					<h3 class="feature-title">Business Logic Detection</h3>
+					<p class="feature-description">
+						Advanced identification of business logic vulnerabilities that traditional tools miss, including authorization flaws and workflow violations.
+					</p>
+				</div>
+
+				<div class="feature-card">
+					<div class="feature-icon">
 						<div class="icon-bg target-icon">🎯</div>
 					</div>
 					<h3 class="feature-title">Context-Aware Suggestions</h3>
@@ -120,6 +140,10 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 			
 			<div class="contact-content">
 				<div class="contact-form-container">
+					<div class="contact-form-header">
+						<h3 class="contact-form-title">Send us a message</h3>
+						<p class="contact-form-subtitle">We'll get back to you within 24 hours</p>
+					</div>
 					<form id="contact-form" class="contact-form" action="/api/contact" method="POST">
 						<div class="form-group">
 							<label for="name">Name <span class="required">*</span></label>
@@ -404,7 +428,7 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 
 	.features-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 		gap: 2rem;
 		margin-top: 4rem;
 	}
@@ -439,6 +463,15 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 		box-shadow: 0 20px 40px rgba(0, 255, 204, 0.1);
 	}
 
+	.feature-card:hover .icon-bg {
+		transform: scale(1.1);
+		border-color: rgba(0, 255, 204, 0.4);
+	}
+
+	.feature-card:hover .icon-bg svg {
+		filter: drop-shadow(0 4px 8px rgba(0, 255, 204, 0.4));
+	}
+
 	.feature-card:hover::before {
 		opacity: 1;
 	}
@@ -456,26 +489,47 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 2rem;
+		font-size: 2.5rem;
 		position: relative;
 		background: rgba(0, 255, 204, 0.1);
 		border: 1px solid rgba(0, 255, 204, 0.2);
+		transition: all 0.3s ease;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	}
+
+	.icon-bg svg {
+		filter: drop-shadow(0 2px 4px rgba(0, 255, 204, 0.3));
 	}
 
 	.brain-icon {
 		background: linear-gradient(135deg, rgba(0, 255, 204, 0.15), rgba(0, 212, 170, 0.15));
+		color: #00ffcc;
 	}
 
 	.lightning-icon {
 		background: linear-gradient(135deg, rgba(255, 193, 7, 0.15), rgba(255, 152, 0, 0.15));
+		color: #ffc107;
+	}
+
+	.noise-icon {
+		background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(139, 195, 74, 0.15));
+		color: #4caf50;
+	}
+
+	.logic-icon {
+		background: linear-gradient(135deg, rgba(63, 81, 181, 0.15), rgba(103, 58, 183, 0.15));
+		color: #3f51b5;
 	}
 
 	.target-icon {
 		background: linear-gradient(135deg, rgba(255, 87, 87, 0.15), rgba(255, 64, 129, 0.15));
+		color: #ff5757;
 	}
 
 	.integration-icon {
 		background: linear-gradient(135deg, rgba(103, 58, 183, 0.15), rgba(156, 39, 176, 0.15));
+		color: #673ab7;
 	}
 
 	.feature-title {
@@ -645,6 +699,13 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 	}
 
 	/* Responsive Design */
+	@media (max-width: 1024px) {
+		.features-grid {
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 1.5rem;
+		}
+	}
+
 	@media (max-width: 768px) {
 		.nav-container {
 			padding: 0 1rem;
@@ -811,12 +872,13 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 			font-size: 2rem;
 		}
 		
-		.contact-info-item {
-			padding: 1.5rem;
+		.contact-form-container {
+			padding: 2rem;
+			max-width: 100%;
 		}
 		
-		.contact-form-container {
-			padding: 1.5rem;
+		.contact-submit-btn {
+			min-width: 100%;
 		}
 	}
 	
@@ -872,88 +934,58 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 	
 	.contact-content {
 		display: flex;
-		gap: 3rem;
-	}
-	
-	.contact-info {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		gap: 1.5rem;
-	}
-	
-	.contact-info-item {
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(0, 255, 204, 0.2);
-		border-radius: 16px;
-		padding: 2rem;
-		display: flex;
-		align-items: center;
-		gap: 1.5rem;
-		transition: all 0.3s ease;
-	}
-	
-	.contact-info-item:hover {
-		transform: translateY(-5px);
-		border-color: rgba(0, 255, 204, 0.4);
-		box-shadow: 0 10px 30px rgba(0, 255, 204, 0.1);
-	}
-	
-	.contact-info-icon {
-		font-size: 2rem;
-		background: rgba(0, 255, 204, 0.1);
-		border: 1px solid rgba(0, 255, 204, 0.2);
-		border-radius: 12px;
-		width: 60px;
-		height: 60px;
-		display: flex;
-		align-items: center;
 		justify-content: center;
-		flex-shrink: 0;
-	}
-	
-	.contact-info-text {
-		flex: 1;
-	}
-	
-	.contact-info-title {
-		font-size: 1.3rem;
-		font-weight: 700;
-		margin: 0 0 0.5rem 0;
-		color: white;
-	}
-	
-	.contact-info-description {
-		font-size: 1rem;
-		color: rgba(255, 255, 255, 0.7);
-		margin: 0;
+		align-items: flex-start;
 	}
 	
 	.contact-form-container {
-		flex: 1.5;
+		max-width: 600px;
+		width: 100%;
 		background: rgba(255, 255, 255, 0.05);
 		border: 1px solid rgba(0, 255, 204, 0.2);
 		border-radius: 20px;
 		padding: 3rem;
 		backdrop-filter: blur(10px);
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+	}
+	
+	.contact-form-header {
+		text-align: center;
+		margin-bottom: 2.5rem;
+		padding-bottom: 1.5rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	}
+	
+	.contact-form-title {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: white;
+		margin: 0 0 0.5rem 0;
+	}
+	
+	.contact-form-subtitle {
+		font-size: 1rem;
+		color: rgba(255, 255, 255, 0.7);
+		margin: 0;
 	}
 	
 	.contact-form {
 		display: flex;
 		flex-direction: column;
-		gap: 1.5rem;
+		gap: 2rem;
 	}
 	
 	.form-group {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 0.75rem;
 	}
 	
 	.form-group label {
 		font-size: 1rem;
-		font-weight: 500;
+		font-weight: 600;
 		color: white;
+		letter-spacing: 0.025em;
 	}
 	
 	.required {
@@ -961,33 +993,42 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 	}
 	
 	.form-control {
-		padding: 1rem 1.5rem;
-		background: rgba(255, 255, 255, 0.1);
-		border: 1px solid rgba(255, 255, 255, 0.2);
+		padding: 1.25rem 1.5rem;
+		background: rgba(255, 255, 255, 0.08);
+		border: 2px solid rgba(255, 255, 255, 0.1);
 		border-radius: 12px;
 		color: white;
 		font-size: 1rem;
+		font-family: inherit;
 		transition: all 0.3s ease;
+		line-height: 1.5;
 	}
 	
 	.form-control:focus {
 		outline: none;
-		border-color: rgba(0, 255, 204, 0.5);
-		box-shadow: 0 0 0 2px rgba(0, 255, 204, 0.2);
+		border-color: rgba(0, 255, 204, 0.6);
+		background: rgba(255, 255, 255, 0.12);
+		box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.15);
+		transform: translateY(-1px);
 	}
 	
 	.form-control::placeholder {
-		color: rgba(255, 255, 255, 0.5);
+		color: rgba(255, 255, 255, 0.4);
 	}
 	
 	textarea.form-control {
 		resize: vertical;
-		min-height: 120px;
+		min-height: 140px;
+		font-family: inherit;
 	}
 	
 	.contact-submit-btn {
 		margin-top: 1rem;
-		align-self: flex-start;
+		align-self: center;
+		padding: 1rem 3rem;
+		font-size: 1.1rem;
+		font-weight: 600;
+		min-width: 200px;
 	}
 	
 	.form-status {

@@ -2,9 +2,9 @@
 title: "Initial Test: Reware AI in Hunting Vulnerabilities"
 description: "An in-depth look at our first test of Reware AI using a custom vulnerable Flask app, revealing how it stacks up against CodeQL in detecting 24 diverse security flaws."
 pubDate: 2025-06-06T00:00:00Z
-thumbnail: "/blog-images/ai-security.jpg"
+thumbnail: "/blog-images/init-study.png"
 author: "Reza Hazhirpasand"
-tags: ["AI"]
+tags: ["AI", "Software Security", "Vulnerability Detection"]
 ---
 
 This post details our very first exploratory test of **Reware AI**, offering a transparent look at what we found and how our tool performed against some common vulnerabilities in a controlled environment. We also include a comparison with **CodeQL**, GitHub's powerful semantic code analysis engine, to provide context on current leading tools. Join us as we share the early insights that are shaping the future of Reware AI.
