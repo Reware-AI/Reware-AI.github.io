@@ -1,13 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
-  adapter: node({
-    mode: 'standalone',
-  }),
   markdown: {
     shikiConfig: {
       // Choose from Shiki's built-in themes (or add your own)
@@ -21,15 +17,5 @@ export default defineConfig({
     syntaxHighlight: 'shiki',
     remarkPlugins: [],
     rehypePlugins: [],
-  },
-  // Enable content collections
-  content: {
-    // Ensure content collections are properly registered
-    collections: {
-      blog: {
-        type: 'content',
-        directory: 'src/content/blog',
-      },
-    },
   },
 });
