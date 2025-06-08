@@ -1,5 +1,6 @@
 ---
 const { title = "RewareAI - Next-Gen AI-Native Security Scanning" } = Astro.props;
+import '../styles/markdown.css';
 ---
 
 <!doctype html>
@@ -9,7 +10,32 @@ const { title = "RewareAI - Next-Gen AI-Native Security Scanning" } = Astro.prop
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+		<meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';" />
 		<title>{title}</title>
+		
+		<!-- Script to enhance markdown rendering -->
+		<script src="/scripts/markdown-enhance.js" defer></script>
+		
+		<!-- Ensure styles apply correctly to markdown content -->
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				// Add specific classes to enhance styling of markdown elements
+				const content = document.querySelector('.blog-post-content');
+				if (content) {
+					// Ensure links in markdown are properly styled
+					content.querySelectorAll('a').forEach(link => {
+						link.classList.add('markdown-link');
+					});
+					
+					// Ensure tables in markdown are properly styled
+					content.querySelectorAll('table').forEach(table => {
+						table.classList.add('markdown-table');
+					});
+				}
+			});
+		</script>
 	</head>
 	<body>
 		<slot />

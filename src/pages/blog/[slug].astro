@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import { format } from 'date-fns';
 
 export async function getStaticPaths() {
@@ -11,24 +11,48 @@ export async function getStaticPaths() {
   }));
 }
 
-const { entry } = Astro.props;
-const { Content } = await entry.render();
+// Get the entry directly for server-side rendering
+const { slug } = Astro.params;
+let entry = Astro.props.entry;
 
+// If entry is not available from props (in SSR mode), get it directly
+if (!entry && slug) {
+  entry = await getEntry('blog', slug);
+}
+
+// Add error handling to prevent "Cannot read properties of undefined" error
+let Content;
+try {
+  if (entry) {
+    const rendered = await entry.render();
+    Content = rendered.Content;
+  }
+} catch (error) {
+  console.error(`Error rendering blog post content: ${error instanceof Error ? error.message : String(error)}`);
+  // We'll handle the error in the template
+}
 ---
 
-<Layout title={`${entry.data.title} - RewareAI Blog`}>
-  <div class="blog-post-container">
-    <nav class="blog-nav">
-      <div class="blog-nav-container">
-        <a href="/" class="blog-nav-logo">RewareAI</a>
-        <a href="/blog" class="blog-nav-back">← Back to Blog</a>
-      </div>
-    </nav>
-    
-    <div class="blog-post-header">
-      <div class="blog-post-image-container">
-        <img src={entry.data.thumbnail.startsWith('/') ? entry.data.thumbnail : `/${entry.data.thumbnail}`} alt={entry.data.title} class="blog-post-image" />
-      </div>
+<Layout title={entry ? `${entry.data.title} - RewareAI Blog` : 'Error - RewareAI Blog'}>
+  {!Content ? (
+    <div class="error-container">
+      <h1>Error Loading Blog Post</h1>
+      <p>We're sorry, but there was an error loading this blog post.</p>
+      <a href="/blog">Return to Blog</a>
+    </div>
+  ) : (
+    <div class="blog-post-container">
+      <nav class="blog-nav">
+        <div class="blog-nav-container">
+          <a href="/" class="blog-nav-logo">RewareAI</a>
+          <a href="/blog" class="blog-nav-back">← Back to Blog</a>
+        </div>
+      </nav>
+      
+      <div class="blog-post-header">
+        <div class="blog-post-image-container">
+          <img src={entry.data.thumbnail.startsWith('/') ? entry.data.thumbnail : `/${entry.data.thumbnail}`} alt={entry.data.title} class="blog-post-image" />
+        </div>
       <div class="blog-post-meta">
         <h1 class="blog-post-title">{entry.data.title}</h1>
         <div class="blog-post-details">
@@ -45,9 +69,9 @@ const { Content } = await entry.render();
       </div>
     </div>
     
-    <div class="blog-post-content">
+    <article class="blog-post-content">
       <Content />
-    </div>
+    </article>
     
     <div class="blog-post-footer">
       <a href="/blog" class="btn btn-secondary">Back to All Posts</a>
@@ -60,9 +84,468 @@ const { Content } = await entry.render();
       </div>
     </div>
   </div>
+)}
 </Layout>
 
-<style>
+<style is:global>
+  /* Core container styles */
+  .blog-post-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  /* Navigation styles */
+  .blog-nav {
+    padding: 2rem 0;
+  }
+  
+  .blog-nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .blog-nav-logo {
+    color: #00ffcc;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  
+  .blog-nav-back {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .blog-nav-back:hover {
+    color: #00ffcc;
+  }
+  
+  /* Header and metadata styles */
+  .blog-post-header {
+    margin-bottom: 3rem;
+  }
+  
+  .blog-post-image-container {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+  }
+  
+  .blog-post-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .blog-post-meta {
+    margin-bottom: 2rem;
+  }
+  
+  .blog-post-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0 0 1.5rem 0;
+    background: linear-gradient(135deg, #ffffff 0%, #00ffcc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .blog-post-details {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+  }
+  
+  .blog-post-author {
+    font-weight: 500;
+  }
+  
+  .blog-post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .blog-post-tag {
+    background: rgba(0, 255, 204, 0.1);
+    border: 1px solid rgba(0, 255, 204, 0.3);
+    color: #00ffcc;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+  }
+  
+  /* Content area styling - Using more direct selectors */
+  .blog-post-content {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 4rem;
+  }
+  
+  /* Direct selectors for all content elements to ensure they're targeted */
+  .blog-post-content :where(h1, h2, h3, h4, h5, h6) {
+    font-weight: 700;
+    margin: 2.5rem 0 1.5rem;
+    line-height: 1.3;
+  }
+  
+  .blog-post-content h1 {
+    font-size: 2.5rem;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+  }
+  
+  .blog-post-content h2 {
+    font-size: 2rem;
+    color: #00ffcc;
+  }
+  
+  .blog-post-content h3 {
+    font-size: 1.5rem;
+    color: white;
+  }
+  
+  .blog-post-content h4 {
+    font-size: 1.25rem;
+    color: #00ffcc;
+  }
+  
+  .blog-post-content h5 {
+    font-size: 1.1rem;
+    color: white;
+  }
+  
+  .blog-post-content h6 {
+    font-size: 1rem;
+    color: rgba(0, 255, 204, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Paragraph and text formatting */
+  .blog-post-content p {
+    margin-bottom: 1.5rem;
+  }
+  
+  .blog-post-content strong,
+  .blog-post-content b {
+    color: white;
+    font-weight: 600;
+  }
+  
+  .blog-post-content em,
+  .blog-post-content i {
+    font-style: italic;
+  }
+  
+  /* List styles with direct selectors */
+  .blog-post-content ul,
+  .blog-post-content ol {
+    margin: 1.5rem 0 1.5rem 2rem;
+    padding-left: 1rem;
+  }
+  
+  .blog-post-content li {
+    margin-bottom: 0.75rem;
+  }
+  
+  .blog-post-content li > ul,
+  .blog-post-content li > ol {
+    margin: 0.75rem 0 0.75rem 1.5rem;
+  }
+  
+  /* Link styles - Direct and !important to override any other styles */
+  .blog-post-content a,
+  article a {
+    color: #00ffcc !important;
+    text-decoration: none !important;
+    border-bottom: 2px solid rgba(0, 255, 204, 0.5) !important;
+    transition: all 0.3s ease !important;
+    font-weight: 600 !important;
+    padding: 0 0.15rem 2px !important;
+    border-radius: 2px !important;
+    background-color: transparent !important;
+  }
+  
+  .blog-post-content a:hover,
+  article a:hover {
+    color: #ffffff !important;
+    background-color: rgba(0, 255, 204, 0.2) !important;
+    border-color: #00ffcc !important;
+  }
+  
+  /* Horizontal rule styling */
+  .blog-post-content hr {
+    margin: 3rem 0;
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      rgba(0, 255, 204, 0), 
+      rgba(0, 255, 204, 0.5) 50%, 
+      rgba(0, 255, 204, 0)
+    );
+  }
+  
+  /* Table styles - Direct and !important to ensure they're applied */
+  .blog-post-content table,
+  article table {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    margin: 2.5rem 0 !important;
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    border: 1px solid rgba(0, 255, 204, 0.15) !important;
+  }
+  
+  .blog-post-content th,
+  .blog-post-content thead th,
+  article th {
+    background-color: rgba(0, 255, 204, 0.15) !important;
+    color: #00ffcc !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+    padding: 1.25rem 1rem !important;
+    border-bottom: 2px solid rgba(0, 255, 204, 0.3) !important;
+  }
+  
+  .blog-post-content td,
+  article td {
+    padding: 1rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+  
+  .blog-post-content tr:last-child td,
+  article tr:last-child td {
+    border-bottom: none !important;
+  }
+  
+  .blog-post-content tr:hover td,
+  article tr:hover td {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+  }
+  
+  /* Responsive table layout */
+  @media (max-width: 768px) {
+    .blog-post-content table,
+    article table {
+      display: block !important;
+      overflow-x: auto !important;
+      white-space: nowrap !important;
+    }
+  }
+  
+  /* Blockquote styling */
+  .blog-post-content blockquote,
+  article blockquote {
+    border-left: 4px solid #00ffcc !important;
+    padding: 0.5rem 0 0.5rem 1.5rem !important;
+    margin: 2.5rem 0 !important;
+    background-color: rgba(0, 255, 204, 0.05) !important;
+    border-radius: 0 8px 8px 0 !important;
+  }
+  
+  .blog-post-content blockquote p,
+  article blockquote p {
+    font-style: italic !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  .blog-post-content blockquote p:last-child,
+  article blockquote p:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  /* Code block styling */
+  .blog-post-content :not(pre) > code,
+  article :not(pre) > code {
+    background: rgba(255, 255, 255, 0.1) !important;
+    padding: 0.2rem 0.4rem !important;
+    border-radius: 4px !important;
+    font-family: 'Fira Code', 'JetBrains Mono', 'Roboto Mono', Menlo, Monaco, Consolas, monospace !important;
+    font-size: 0.9em !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+  }
+  
+  .blog-post-content pre,
+  article pre,
+  div.astro-code {
+    background: rgba(0, 0, 0, 0.3) !important;
+    padding: 1.5rem !important;
+    border-radius: 8px !important;
+    overflow-x: auto !important;
+    margin: 2rem 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .blog-post-content pre code,
+  article pre code {
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    display: block !important;
+    line-height: 1.6 !important;
+    font-family: 'Fira Code', 'JetBrains Mono', 'Roboto Mono', Menlo, Monaco, Consolas, monospace !important;
+    font-size: 0.9em !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+  }
+  
+  /* Syntax highlighting overrides */
+  .astro-code,
+  [data-theme="dark"] .astro-code,
+  [data-theme="light"] .astro-code {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    padding: 1.5rem !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  /* Image styling */
+  .blog-post-content img,
+  article img {
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 8px !important;
+    margin: 2rem 0 !important;
+    display: block !important;
+  }
+  
+  /* Footer styles */
+  .blog-post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .blog-post-share {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .blog-post-share-icons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .share-icon {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .share-icon:hover {
+    color: #00ffcc;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .blog-post-header {
+      margin-bottom: 2rem;
+    }
+    
+    .blog-post-image-container {
+      height: 250px;
+    }
+    
+    .blog-post-details {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .blog-post-footer {
+      flex-direction: column;
+      gap: 2rem;
+      text-align: center;
+    }
+  }
+</style>
+
+<!-- Additional direct styling for Astro-generated content -->
+<style is:global>
+  /* These selectors target specifically what Astro might generate */
+  
+  /* Make sure any Astro-generated anchors get our styling */
+  .prose a, 
+  .astro-code-content a,
+  [astro-island] a,
+  [data-astro-cid] a {
+    color: #00ffcc !important;
+    text-decoration: none !important;
+    border-bottom: 2px solid rgba(0, 255, 204, 0.5) !important;
+    transition: all 0.3s ease !important;
+    font-weight: 600 !important;
+    padding: 0 0.15rem 2px !important;
+    border-radius: 2px !important;
+  }
+  
+  .prose a:hover, 
+  .astro-code-content a:hover,
+  [astro-island] a:hover,
+  [data-astro-cid] a:hover {
+    color: #ffffff !important;
+    background-color: rgba(0, 255, 204, 0.2) !important;
+    border-color: #00ffcc !important;
+  }
+  
+  /* Ensure tables get styled properly */
+  .prose table,
+  .astro-code-content table,
+  [astro-island] table,
+  [data-astro-cid] table {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    margin: 2.5rem 0 !important;
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    border: 1px solid rgba(0, 255, 204, 0.15) !important;
+  }
+  
+  .prose th,
+  .astro-code-content th,
+  [astro-island] th,
+  [data-astro-cid] th {
+    background-color: rgba(0, 255, 204, 0.15) !important;
+    color: #00ffcc !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+    padding: 1.25rem 1rem !important;
+    border-bottom: 2px solid rgba(0, 255, 204, 0.3) !important;
+  }
+  
+  .prose td,
+  .astro-code-content td,
+  [astro-island] td,
+  [data-astro-cid] td {
+    padding: 1rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+</style>
+
+<style is:global>
   .blog-post-container {
     max-width: 900px;
     margin: 0 auto;
@@ -157,6 +640,7 @@ const { Content } = await entry.render();
     font-size: 0.9rem;
   }
   
+  /* Style for content inside the blog post */
   .blog-post-content {
     color: rgba(255, 255, 255, 0.9);
     font-size: 1.1rem;
@@ -164,64 +648,198 @@ const { Content } = await entry.render();
     margin-bottom: 4rem;
   }
   
-  .blog-post-content h1 {
-    font-size: 2.5rem;
+  /* Heading styles - Target both classes and direct elements */
+  .blog-post-content :is(h1, h2, h3, h4, h5, h6),
+  .blog-post-content :is(.heading-1, .heading-2, .heading-3, .heading-4, .heading-5, .heading-6) {
     font-weight: 700;
-    margin: 2rem 0 1.5rem;
-    color: white;
+    margin: 2.5rem 0 1.5rem;
+    line-height: 1.3;
   }
   
-  .blog-post-content h2 {
+  .blog-post-content :is(h1, .heading-1) {
+    font-size: 2.5rem;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+  }
+  
+  .blog-post-content :is(h2, .heading-2) {
     font-size: 2rem;
-    font-weight: 700;
-    margin: 2rem 0 1.5rem;
     color: #00ffcc;
   }
   
-  .blog-post-content h3 {
+  .blog-post-content :is(h3, .heading-3) {
     font-size: 1.5rem;
-    font-weight: 700;
-    margin: 2rem 0 1.5rem;
     color: white;
   }
   
+  .blog-post-content :is(h4, .heading-4) {
+    font-size: 1.25rem;
+    color: #00ffcc;
+  }
+  
+  .blog-post-content :is(h5, .heading-5) {
+    font-size: 1.1rem;
+    color: white;
+  }
+  
+  .blog-post-content :is(h6, .heading-6) {
+    font-size: 1rem;
+    color: rgba(0, 255, 204, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Text content */
   .blog-post-content p {
     margin-bottom: 1.5rem;
   }
   
-  .blog-post-content ul, .blog-post-content ol {
+  .blog-post-content :is(strong, b) {
+    color: white;
+    font-weight: 600;
+  }
+  
+  .blog-post-content :is(em, i) {
+    font-style: italic;
+  }
+  
+  /* Lists - Target Astro-generated classes and direct elements */
+  .blog-post-content :is(ul, ol, .list, .list-decimal, .list-disc) {
     margin: 1.5rem 0 1.5rem 2rem;
+    padding-left: 1rem;
   }
   
-  .blog-post-content li {
-    margin-bottom: 0.5rem;
+  .blog-post-content :is(li, .list-item) {
+    margin-bottom: 0.75rem;
   }
   
-  .blog-post-content a {
+  .blog-post-content li > :is(ul, ol, .list, .list-decimal, .list-disc),
+  .blog-post-content .list-item > :is(ul, ol, .list, .list-decimal, .list-disc) {
+    margin: 0.75rem 0 0.75rem 1.5rem;
+  }
+  
+  /* Links - Target both direct elements and possible Astro classes */
+  .blog-post-content :is(a, .link) {
+    color: #00ffcc !important;
+    text-decoration: none !important;
+    border-bottom: 2px solid rgba(0, 255, 204, 0.5) !important;
+    transition: all 0.3s ease !important;
+    font-weight: 600 !important;
+    padding: 0 0.15rem 2px !important;
+    border-radius: 2px !important;
+  }
+  
+  .blog-post-content :is(a, .link):hover {
+    color: #ffffff !important;
+    background-color: rgba(0, 255, 204, 0.2) !important;
+    border-color: #00ffcc !important;
+  }
+  
+  .blog-post-content :is(a, .link):focus {
+    outline: 2px solid rgba(0, 255, 204, 0.5) !important;
+    outline-offset: 2px !important;
+  }
+  
+  /* Horizontal rule */
+  .blog-post-content hr {
+    margin: 3rem 0;
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      rgba(0, 255, 204, 0), 
+      rgba(0, 255, 204, 0.5) 50%, 
+      rgba(0, 255, 204, 0)
+    );
+  }
+  
+  /* Enhanced table styling - Target both direct elements and possible Astro classes */
+  .blog-post-content :is(table, .table) {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 2.5rem 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 255, 204, 0.15);
+  }
+  
+  .blog-post-content :is(th, .table-header) {
+    background-color: rgba(0, 255, 204, 0.15);
     color: #00ffcc;
-    text-decoration: none;
-    border-bottom: 1px solid rgba(0, 255, 204, 0.3);
-    transition: border-color 0.3s ease;
+    font-weight: 600;
+    text-align: left;
+    padding: 1.25rem 1rem;
+    border-bottom: 2px solid rgba(0, 255, 204, 0.3);
+    position: relative;
   }
   
-  .blog-post-content a:hover {
-    border-color: #00ffcc;
+  .blog-post-content :is(th, .table-header):not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background-color: rgba(0, 255, 204, 0.2);
+  }
+  
+  .blog-post-content :is(td, .table-cell) {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    transition: background-color 0.2s ease;
+  }
+  
+  .blog-post-content :is(td, .table-cell):not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .blog-post-content :is(tr, .table-row):last-child :is(td, .table-cell) {
+    border-bottom: none;
+  }
+  
+  .blog-post-content :is(tr, .table-row):hover :is(td, .table-cell) {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Responsive table */
+  @media (max-width: 768px) {
+    .blog-post-content table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
   }
   
   .blog-post-content blockquote {
     border-left: 4px solid #00ffcc;
-    padding-left: 1.5rem;
-    margin: 2rem 0;
-    font-style: italic;
-    color: rgba(255, 255, 255, 0.8);
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    margin: 2.5rem 0;
+    background-color: rgba(0, 255, 204, 0.05);
+    border-radius: 0 8px 8px 0;
   }
   
+  .blog-post-content blockquote p {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.75rem;
+  }
+  
+  .blog-post-content blockquote p:last-child {
+    margin-bottom: 0;
+  }
+  
+  /* Code blocks */
   .blog-post-content code {
     background: rgba(255, 255, 255, 0.1);
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
-    font-family: monospace;
+    font-family: 'Fira Code', 'JetBrains Mono', 'Roboto Mono', Menlo, Monaco, Consolas, monospace;
     font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.95);
   }
   
   .blog-post-content pre {
@@ -230,11 +848,39 @@ const { Content } = await entry.render();
     border-radius: 8px;
     overflow-x: auto;
     margin: 2rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
   .blog-post-content pre code {
     background: transparent;
     padding: 0;
+    border-radius: 0;
+    display: block;
+    line-height: 1.6;
+  }
+  
+  /* Images */
+  .blog-post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 2rem 0;
+    display: block;
+  }
+  
+  /* Custom classes for content alignment */
+  .blog-post-content .align-center {
+    text-align: center;
+  }
+  
+  .blog-post-content .align-right {
+    text-align: right;
+  }
+  
+  .blog-post-content .full-width {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
   
   .blog-post-footer {

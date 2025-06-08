@@ -1,0 +1,128 @@
+/* Additional styles to target Astro's markdown rendering */
+
+/* Specificity for Astro-rendered markdown links */
+.blog-post-content a,
+.blog-post-content .astro-XXXXX a,
+.blog-post-content a[href],
+article a,
+.markdown-link {
+  color: #00ffcc !important;
+  text-decoration: none !important;
+  border-bottom: 2px solid rgba(0, 255, 204, 0.5) !important;
+  transition: all 0.3s ease !important;
+  font-weight: 600 !important;
+  padding: 0 0.15rem 2px !important;
+  border-radius: 2px !important;
+}
+
+.blog-post-content a:hover,
+.blog-post-content .astro-XXXXX a:hover,
+.blog-post-content a[href]:hover,
+article a:hover,
+.markdown-link:hover {
+  color: #ffffff !important;
+  background-color: rgba(0, 255, 204, 0.2) !important;
+  border-color: #00ffcc !important;
+}
+
+/* Enhanced table styling with greater specificity */
+.blog-post-content table,
+article table,
+.astro-XXXXX table,
+.markdown-table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  margin: 2.5rem 0 !important;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(0, 255, 204, 0.15) !important;
+}
+
+.blog-post-content th,
+.blog-post-content thead th,
+article th,
+.astro-XXXXX th,
+.markdown-table th {
+  background-color: rgba(0, 255, 204, 0.15) !important;
+  color: #00ffcc !important;
+  font-weight: 600 !important;
+  text-align: left !important;
+  padding: 1.25rem 1rem !important;
+  border-bottom: 2px solid rgba(0, 255, 204, 0.3) !important;
+}
+
+.blog-post-content td,
+article td,
+.astro-XXXXX td {
+  padding: 1rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.blog-post-content tr:last-child td,
+article tr:last-child td,
+.astro-XXXXX tr:last-child td {
+  border-bottom: none !important;
+}
+
+.blog-post-content tr:hover td,
+article tr:hover td,
+.astro-XXXXX tr:hover td {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Code blocks with greater specificity */
+.blog-post-content code,
+article code,
+.astro-XXXXX code {
+  font-family: 'Fira Code', 'JetBrains Mono', 'Roboto Mono', Menlo, Monaco, Consolas, monospace !important;
+  font-size: 0.9em !important;
+}
+
+.blog-post-content :not(pre) > code,
+article :not(pre) > code,
+.astro-XXXXX :not(pre) > code {
+  background: rgba(255, 255, 255, 0.1) !important;
+  padding: 0.2rem 0.4rem !important;
+  border-radius: 4px !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.blog-post-content pre,
+article pre,
+.astro-XXXXX pre,
+div[data-rehype-pretty-code-fragment] {
+  background: rgba(0, 0, 0, 0.3) !important;
+  padding: 1.5rem !important;
+  border-radius: 8px !important;
+  overflow-x: auto !important;
+  margin: 2rem 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.blog-post-content pre code,
+article pre code,
+.astro-XXXXX pre code,
+div[data-rehype-pretty-code-fragment] code {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  display: block !important;
+  line-height: 1.6 !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Specificity for shiki code highlighting */
+.astro-code,
+[data-theme="dark"] .astro-code,
+[data-theme="light"] .astro-code {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  padding: 1.5rem !important;
+  border-radius: 8px !important;
+  overflow-x: auto !important;
+  margin: 2rem 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}

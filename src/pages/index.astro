@@ -15,7 +15,7 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 					<a href="#features" class="nav-link">Features</a>
 				</li>
 					<li class="nav-item">
-					<a href="#blog" class="nav-link">Blog</a>
+					<a href="blog" class="nav-link">Blog</a>
 				</li>
 				<li class="nav-item">
 					<a href="#demo" class="nav-link">Demo</a>
@@ -45,9 +45,8 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 				intelligent, AI-powered security scanning.
 			</p>
 			<div class="hero-buttons">
-				<button class="btn btn-primary">Start Free Scan</button>
-				<button class="btn btn-secondary">Request a Demo</button>
-				<button class="btn btn-secondary">See AI in Action</button>
+				<a href="#contact"><button class="btn btn-primary">Request a Demo</button></a>
+				
 			</div>
 		</div>
 	</main>
@@ -69,7 +68,7 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 					</div>
 					<h3 class="feature-title">AI-Driven Scanning</h3>
 					<p class="feature-description">
-						Intelligent analysis of source code, dependencies, and configuration files using advanced machine learning algorithms.
+						Intelligent analysis of source code, dependencies, and configuration files using advanced AI agents.
 					</p>
 				</div>
 
@@ -106,79 +105,130 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 		</div>
 	</section>
 
-	<!-- Benefits Section -->
-	<section id="benefits" class="benefits">
-		<div class="benefits-container">
-			<div class="benefits-header">
-				<h2 class="benefits-title">Why Choose AI-Native Security?</h2>
-				<p class="benefits-subtitle">
-					Experience the next generation of security scanning with unparalleled accuracy and intelligence
+	<!-- Blog Section -->
+	<FeaturedBlog />
+
+	<!-- Contact Section -->
+	<section id="contact" class="contact">
+		<div class="contact-container">
+			<div class="contact-header">
+				<h2 class="contact-title">Get in Touch</h2>
+				<p class="contact-subtitle">
+					Have questions about our AI security solutions? Contact us today and our team will get back to you shortly.
 				</p>
 			</div>
 			
-			<div class="benefits-list">
-				<div class="benefit-item">
-					<div class="benefit-content">
-						<div class="benefit-icon-wrapper">
-							<div class="benefit-icon rocket-bg">🚀</div>
+			<div class="contact-content">
+				<div class="contact-form-container">
+					<form id="contact-form" class="contact-form" action="/api/contact" method="POST">
+						<div class="form-group">
+							<label for="name">Name <span class="required">*</span></label>
+							<input type="text" id="name" name="name" class="form-control" required>
 						</div>
-						<div class="benefit-text">
-							<h3 class="benefit-title">Faster, Smarter Detection</h3>
-							<p class="benefit-description">
-								AI algorithms detect vulnerabilities 10x faster than traditional tools with superior accuracy.
-							</p>
+						
+						<div class="form-group">
+							<label for="email">Email <span class="required">*</span></label>
+							<input type="email" id="email" name="email" class="form-control" required>
 						</div>
-					</div>
-				</div>
-
-				<div class="benefit-item">
-					<div class="benefit-content">
-						<div class="benefit-icon-wrapper">
-							<div class="benefit-icon shield-bg">🎯</div>
+						
+						<!-- Honeypot field to catch bots -->
+						<div class="form-group" style="display:none;">
+							<label for="website">Website</label>
+							<input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
 						</div>
-						<div class="benefit-text">
-							<h3 class="benefit-title">Reduced False Positives</h3>
-							<p class="benefit-description">
-								Intelligent filtering eliminates noise and focuses on real security threats that matter.
-							</p>
+						
+						<div class="form-group">
+							<label for="subject">Subject</label>
+							<input type="text" id="subject" name="subject" class="form-control">
 						</div>
-					</div>
-				</div>
-
-				<div class="benefit-item">
-					<div class="benefit-content">
-						<div class="benefit-icon-wrapper">
-							<div class="benefit-icon tools-bg">🔧</div>
+						
+						<div class="form-group">
+							<label for="message">Message <span class="required">*</span></label>
+							<textarea id="message" name="message" class="form-control" rows="5" required></textarea>
 						</div>
-						<div class="benefit-text">
-							<h3 class="benefit-title">Actionable Security Fixes</h3>
-							<p class="benefit-description">
-								Get specific, code-level recommendations that developers can implement immediately.
-							</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="benefit-item">
-					<div class="benefit-content">
-						<div class="benefit-icon-wrapper">
-							<div class="benefit-icon protection-bg">🛡️</div>
-						</div>
-						<div class="benefit-text">
-							<h3 class="benefit-title">Continuous Protection</h3>
-							<p class="benefit-description">
-								24/7 monitoring ensures your applications stay secure throughout the development lifecycle.
-							</p>
-						</div>
-					</div>
+						
+						<div id="form-status" class="form-status" role="alert" aria-live="polite"></div>
+						
+						<button type="submit" class="btn btn-primary contact-submit-btn">Send Message</button>
+					</form>
 				</div>
 			</div>
 		</div>
 	</section>
-
-	<!-- Blog Section -->
-	<FeaturedBlog />
+	
+	<!-- Footer Section -->
+	<footer class="footer">
+		<div class="footer-container">
+			<div class="footer-logo">
+				<h3>RewareAI</h3>
+				<p class="footer-tagline">Next-Gen AI-Native Security Scanning</p>
+			</div>
+			
+			<div class="footer-links">
+				<div class="footer-links-column">
+					<h4 class="footer-links-title">Products</h4>
+					<ul class="footer-links-list">
+						<li><a href="#" class="footer-link">AI Scanner</a></li>
+						<li><a href="#" class="footer-link">Enterprise Solutions</a></li>
+						<li><a href="#" class="footer-link">Integrations</a></li>
+						<li><a href="#" class="footer-link">Pricing</a></li>
+					</ul>
+				</div>
+				
+				<div class="footer-links-column">
+					<h4 class="footer-links-title">Resources</h4>
+					<ul class="footer-links-list">
+						<li><a href="#" class="footer-link">Documentation</a></li>
+						<li><a href="/blog" class="footer-link">Blog</a></li>
+						<li><a href="#" class="footer-link">Case Studies</a></li>
+						<li><a href="#" class="footer-link">Webinars</a></li>
+					</ul>
+				</div>
+				
+				<div class="footer-links-column">
+					<h4 class="footer-links-title">Company</h4>
+					<ul class="footer-links-list">
+						<li><a href="#" class="footer-link">About Us</a></li>
+						<li><a href="#" class="footer-link">Careers</a></li>
+						<li><a href="#contact" class="footer-link">Contact</a></li>
+						<li><a href="#" class="footer-link">Partners</a></li>
+					</ul>
+				</div>
+				
+				<div class="footer-links-column">
+					<h4 class="footer-links-title">Legal</h4>
+					<ul class="footer-links-list">
+						<li><a href="#" class="footer-link">Privacy Policy</a></li>
+						<li><a href="#" class="footer-link">Terms of Service</a></li>
+						<li><a href="#" class="footer-link">Cookie Policy</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="footer-bottom">
+			<div class="footer-container">
+				<div class="footer-copyright">
+					&copy; {new Date().getFullYear()} RewareAI. All rights reserved.
+				</div>
+				<div class="footer-social">
+					<a href="#" class="footer-social-link" aria-label="Twitter">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+					</a>
+					<a href="#" class="footer-social-link" aria-label="LinkedIn">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+					</a>
+					<a href="#" class="footer-social-link" aria-label="GitHub">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+					</a>
+				</div>
+			</div>
+		</div>
+	</footer>
 </Layout>
+
+<!-- Contact form script -->
+<script is:inline src="/scripts/contact-form.js"></script>
 
 <style>
 	/* Navigation Styles */
@@ -278,9 +328,9 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 
 	.hero-title {
 		font-size: clamp(3rem, 8vw, 6rem);
-		font-weight: 800;
+		font-weight: 600;
 		line-height: 1.1;
-		margin: 0 0 2rem 0;
+		margin: 40px 0 2rem 0;
 		background: linear-gradient(135deg, #ffffff 0%, #00ffcc 100%);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
@@ -669,6 +719,14 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 		.hero-background {
 			opacity: 0.3;
 		}
+		
+		.contact-content {
+			flex-direction: column;
+		}
+		
+		.contact-info {
+			margin-bottom: 2rem;
+		}
 	}
 
 	@media (max-width: 480px) {
@@ -739,6 +797,361 @@ import FeaturedBlog from '../components/FeaturedBlog.astro';
 
 		.hero-background {
 			opacity: 0.25;
+		}
+		
+		.contact {
+			padding: 60px 1rem;
+		}
+		
+		.contact-header {
+			margin-bottom: 3rem;
+		}
+		
+		.contact-title {
+			font-size: 2rem;
+		}
+		
+		.contact-info-item {
+			padding: 1.5rem;
+		}
+		
+		.contact-form-container {
+			padding: 1.5rem;
+		}
+	}
+	
+	/* Contact Section Styles */
+	.contact {
+		padding: 120px 2rem;
+		position: relative;
+		background: linear-gradient(135deg, #1a1b3a 0%, #2d1b69 100%);
+	}
+	
+	.contact::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: 
+			radial-gradient(circle at 70% 30%, rgba(0, 255, 204, 0.05) 0%, transparent 50%),
+			radial-gradient(circle at 30% 70%, rgba(0, 255, 204, 0.05) 0%, transparent 50%);
+		pointer-events: none;
+	}
+	
+	.contact-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		position: relative;
+		z-index: 1;
+	}
+	
+	.contact-header {
+		text-align: center;
+		margin-bottom: 4rem;
+	}
+	
+	.contact-title {
+		font-size: clamp(2.5rem, 5vw, 4rem);
+		font-weight: 800;
+		margin: 0 0 1.5rem 0;
+		background: linear-gradient(135deg, #ffffff 0%, #00ffcc 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+	
+	.contact-subtitle {
+		font-size: 1.2rem;
+		color: rgba(255, 255, 255, 0.7);
+		max-width: 600px;
+		margin: 0 auto;
+		line-height: 1.6;
+	}
+	
+	.contact-content {
+		display: flex;
+		gap: 3rem;
+	}
+	
+	.contact-info {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+	
+	.contact-info-item {
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(0, 255, 204, 0.2);
+		border-radius: 16px;
+		padding: 2rem;
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		transition: all 0.3s ease;
+	}
+	
+	.contact-info-item:hover {
+		transform: translateY(-5px);
+		border-color: rgba(0, 255, 204, 0.4);
+		box-shadow: 0 10px 30px rgba(0, 255, 204, 0.1);
+	}
+	
+	.contact-info-icon {
+		font-size: 2rem;
+		background: rgba(0, 255, 204, 0.1);
+		border: 1px solid rgba(0, 255, 204, 0.2);
+		border-radius: 12px;
+		width: 60px;
+		height: 60px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+	
+	.contact-info-text {
+		flex: 1;
+	}
+	
+	.contact-info-title {
+		font-size: 1.3rem;
+		font-weight: 700;
+		margin: 0 0 0.5rem 0;
+		color: white;
+	}
+	
+	.contact-info-description {
+		font-size: 1rem;
+		color: rgba(255, 255, 255, 0.7);
+		margin: 0;
+	}
+	
+	.contact-form-container {
+		flex: 1.5;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(0, 255, 204, 0.2);
+		border-radius: 20px;
+		padding: 3rem;
+		backdrop-filter: blur(10px);
+	}
+	
+	.contact-form {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+	
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	
+	.form-group label {
+		font-size: 1rem;
+		font-weight: 500;
+		color: white;
+	}
+	
+	.required {
+		color: #00ffcc;
+	}
+	
+	.form-control {
+		padding: 1rem 1.5rem;
+		background: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 12px;
+		color: white;
+		font-size: 1rem;
+		transition: all 0.3s ease;
+	}
+	
+	.form-control:focus {
+		outline: none;
+		border-color: rgba(0, 255, 204, 0.5);
+		box-shadow: 0 0 0 2px rgba(0, 255, 204, 0.2);
+	}
+	
+	.form-control::placeholder {
+		color: rgba(255, 255, 255, 0.5);
+	}
+	
+	textarea.form-control {
+		resize: vertical;
+		min-height: 120px;
+	}
+	
+	.contact-submit-btn {
+		margin-top: 1rem;
+		align-self: flex-start;
+	}
+	
+	.form-status {
+		padding: 0.75rem;
+		border-radius: 8px;
+		font-size: 0.95rem;
+		display: none;
+		margin-bottom: 1rem;
+	}
+	
+	.form-status.success {
+		display: block;
+		background-color: rgba(0, 255, 204, 0.1);
+		border: 1px solid rgba(0, 255, 204, 0.3);
+		color: #00ffcc;
+	}
+	
+	.form-status.error {
+		display: block;
+		background-color: rgba(255, 87, 87, 0.1);
+		border: 1px solid rgba(255, 87, 87, 0.3);
+		color: #ff5757;
+	}
+	
+	/* Footer Styles */
+	.footer {
+		background: rgba(26, 27, 58, 0.98);
+		position: relative;
+		backdrop-filter: blur(10px);
+	}
+	
+	.footer::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 1px;
+		background: linear-gradient(90deg, 
+			rgba(0, 255, 204, 0), 
+			rgba(0, 255, 204, 0.5) 50%, 
+			rgba(0, 255, 204, 0)
+		);
+	}
+	
+	.footer-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 2rem;
+	}
+	
+	.footer-logo {
+		padding-top: 4rem;
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+	
+	.footer-logo h3 {
+		color: #00ffcc;
+		font-size: 2rem;
+		font-weight: 700;
+		margin: 0 0 0.5rem 0;
+	}
+	
+	.footer-tagline {
+		color: rgba(255, 255, 255, 0.7);
+		margin: 0;
+	}
+	
+	.footer-links {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 3rem;
+		padding-bottom: 4rem;
+	}
+	
+	.footer-links-title {
+		color: white;
+		font-size: 1.2rem;
+		font-weight: 600;
+		margin: 0 0 1.5rem 0;
+	}
+	
+	.footer-links-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	
+	.footer-links-list li {
+		margin-bottom: 0.75rem;
+	}
+	
+	.footer-link {
+		color: rgba(255, 255, 255, 0.7);
+		text-decoration: none;
+		transition: color 0.3s ease;
+		font-size: 1rem;
+	}
+	
+	.footer-link:hover {
+		color: #00ffcc;
+	}
+	
+	.footer-bottom {
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		padding: 2rem 0;
+	}
+	
+	.footer-bottom .footer-container {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	
+	.footer-copyright {
+		color: rgba(255, 255, 255, 0.6);
+		font-size: 0.9rem;
+	}
+	
+	.footer-social {
+		display: flex;
+		gap: 1.5rem;
+	}
+	
+	.footer-social-link {
+		color: rgba(255, 255, 255, 0.7);
+		transition: color 0.3s ease;
+	}
+	
+	.footer-social-link:hover {
+		color: #00ffcc;
+	}
+	
+	@media (max-width: 768px) {
+		.footer-logo {
+			padding-top: 3rem;
+			margin-bottom: 2rem;
+		}
+		
+		.footer-links {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 2rem;
+			padding-bottom: 3rem;
+		}
+		
+		.footer-bottom .footer-container {
+			flex-direction: column;
+			gap: 1.5rem;
+			text-align: center;
+		}
+		
+		.footer-social {
+			justify-content: center;
+		}
+	}
+	
+	@media (max-width: 480px) {
+		.footer-links {
+			grid-template-columns: 1fr;
+		}
+		
+		.footer-links-column {
+			text-align: center;
 		}
 	}
 </style>
