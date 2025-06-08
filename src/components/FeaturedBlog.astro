@@ -1,0 +1,233 @@
+---
+import { getCollection } from 'astro:content';
+import { format } from 'date-fns';
+
+const blogPosts = await getCollection('blog');
+// Sort by publication date, newest first
+const sortedPosts = blogPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+// Get the latest post
+const latestPost = sortedPosts.length > 0 ? sortedPosts[0] : null;
+---
+
+{latestPost && (
+  <section id="blog" class="featured-blog">
+    <div class="featured-blog-container">
+      <div class="featured-blog-header">
+        <h2 class="featured-blog-title">Latest from Our Blog</h2>
+        <p class="featured-blog-subtitle">
+          Stay up-to-date with our latest articles and insights on AI security
+        </p>
+      </div>
+      
+      <div class="featured-blog-content">
+        <div class="featured-blog-image-container">
+          <img src={latestPost.data.thumbnail.startsWith('/') ? latestPost.data.thumbnail : `/${latestPost.data.thumbnail}`} alt={latestPost.data.title} class="featured-blog-image" />
+        </div>
+        
+        <div class="featured-blog-text">
+          <div class="featured-blog-meta">
+            <span class="featured-blog-date">{format(latestPost.data.pubDate, 'MMMM d, yyyy')}</span>
+            {latestPost.data.tags && latestPost.data.tags.length > 0 && (
+              <span class="featured-blog-tag">{latestPost.data.tags[0]}</span>
+            )}
+          </div>
+          
+          <h3 class="featured-blog-post-title">{latestPost.data.title}</h3>
+          <p class="featured-blog-description">{latestPost.data.description}</p>
+          
+          <div class="featured-blog-footer">
+            <span class="featured-blog-author">By {latestPost.data.author}</span>
+            <a href={`/blog/${latestPost.slug}`} class="btn btn-primary">Read Article</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="featured-blog-more">
+        <a href="/blog" class="featured-blog-more-link">
+          View All Blog Posts
+          <span class="featured-blog-more-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .featured-blog {
+    padding: 120px 2rem;
+    position: relative;
+    background: linear-gradient(135deg, #1a1b3a 0%, #2d1b69 100%);
+  }
+
+  .featured-blog::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 30% 70%, rgba(0, 255, 204, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 70% 30%, rgba(0, 255, 204, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .featured-blog-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .featured-blog-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .featured-blog-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    margin: 0 0 1.5rem 0;
+    background: linear-gradient(135deg, #ffffff 0%, #00ffcc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .featured-blog-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .featured-blog-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 3rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(0, 255, 204, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .featured-blog-image-container {
+    height: 100%;
+    min-height: 400px;
+  }
+
+  .featured-blog-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .featured-blog-text {
+    padding: 3rem;
+  }
+
+  .featured-blog-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .featured-blog-date {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1rem;
+  }
+
+  .featured-blog-tag {
+    background: rgba(0, 255, 204, 0.1);
+    border: 1px solid rgba(0, 255, 204, 0.3);
+    color: #00ffcc;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+  }
+
+  .featured-blog-post-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 1.5rem 0;
+    color: white;
+  }
+
+  .featured-blog-description {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+  }
+
+  .featured-blog-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .featured-blog-author {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .featured-blog-more {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .featured-blog-more-link {
+    color: #00ffcc;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: opacity 0.3s ease;
+  }
+
+  .featured-blog-more-link:hover {
+    opacity: 0.8;
+  }
+
+  .featured-blog-more-arrow {
+    transition: transform 0.3s ease;
+  }
+
+  .featured-blog-more-link:hover .featured-blog-more-arrow {
+    transform: translateX(5px);
+  }
+
+  @media (max-width: 768px) {
+    .featured-blog {
+      padding: 80px 1rem;
+    }
+
+    .featured-blog-content {
+      grid-template-columns: 1fr;
+    }
+
+    .featured-blog-image-container {
+      min-height: 250px;
+    }
+
+    .featured-blog-text {
+      padding: 2rem;
+    }
+
+    .featured-blog-post-title {
+      font-size: 2rem;
+    }
+
+    .featured-blog-footer {
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+  }
+</style>

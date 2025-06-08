@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import FeaturedBlog from '../components/FeaturedBlog.astro';
 ---
 
 <Layout>
@@ -17,9 +18,6 @@ import Layout from '../layouts/Layout.astro';
 					<a href="#blog" class="nav-link">Blog</a>
 				</li>
 				<li class="nav-item">
-					<a href="#benefits" class="nav-link">Benefits</a>
-				</li>
-				<li class="nav-item">
 					<a href="#demo" class="nav-link">Demo</a>
 				</li>
 				<li class="nav-item">
@@ -31,6 +29,9 @@ import Layout from '../layouts/Layout.astro';
 
 	<!-- Hero Section -->
 	<main class="hero">
+		<!-- Hero Background -->
+		<div class="hero-background"></div>
+		
 		<div class="hero-container">
 			<h1 class="hero-title">
 				Next-Gen AI-Native
@@ -50,25 +51,137 @@ import Layout from '../layouts/Layout.astro';
 			</div>
 		</div>
 	</main>
+
+	<!-- Features Section -->
+	<section id="features" class="features">
+		<div class="features-container">
+			<div class="features-header">
+				<h2 class="features-title">AI-Powered Security Revolution</h2>
+				<p class="features-subtitle">
+					Transform your development workflow with intelligent security scanning that adapts to your codebase
+				</p>
+			</div>
+			
+			<div class="features-grid">
+				<div class="feature-card">
+					<div class="feature-icon">
+						<div class="icon-bg brain-icon">🧠</div>
+					</div>
+					<h3 class="feature-title">AI-Driven Scanning</h3>
+					<p class="feature-description">
+						Intelligent analysis of source code, dependencies, and configuration files using advanced machine learning algorithms.
+					</p>
+				</div>
+
+				<div class="feature-card">
+					<div class="feature-icon">
+						<div class="icon-bg lightning-icon">⚡</div>
+					</div>
+					<h3 class="feature-title">Real-Time Detection</h3>
+					<p class="feature-description">
+						Instant identification of vulnerabilities, misconfigurations, and secret leaks as you code.
+					</p>
+				</div>
+
+				<div class="feature-card">
+					<div class="feature-icon">
+						<div class="icon-bg target-icon">🎯</div>
+					</div>
+					<h3 class="feature-title">Context-Aware Suggestions</h3>
+					<p class="feature-description">
+						Smart remediation recommendations tailored to your specific codebase and development context.
+					</p>
+				</div>
+
+				<div class="feature-card">
+					<div class="feature-icon">
+						<div class="icon-bg integration-icon">🔄</div>
+					</div>
+					<h3 class="feature-title">CI/CD Integration</h3>
+					<p class="feature-description">
+						Seamless integration with your existing development pipeline for continuous security monitoring.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Benefits Section -->
+	<section id="benefits" class="benefits">
+		<div class="benefits-container">
+			<div class="benefits-header">
+				<h2 class="benefits-title">Why Choose AI-Native Security?</h2>
+				<p class="benefits-subtitle">
+					Experience the next generation of security scanning with unparalleled accuracy and intelligence
+				</p>
+			</div>
+			
+			<div class="benefits-list">
+				<div class="benefit-item">
+					<div class="benefit-content">
+						<div class="benefit-icon-wrapper">
+							<div class="benefit-icon rocket-bg">🚀</div>
+						</div>
+						<div class="benefit-text">
+							<h3 class="benefit-title">Faster, Smarter Detection</h3>
+							<p class="benefit-description">
+								AI algorithms detect vulnerabilities 10x faster than traditional tools with superior accuracy.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="benefit-item">
+					<div class="benefit-content">
+						<div class="benefit-icon-wrapper">
+							<div class="benefit-icon shield-bg">🎯</div>
+						</div>
+						<div class="benefit-text">
+							<h3 class="benefit-title">Reduced False Positives</h3>
+							<p class="benefit-description">
+								Intelligent filtering eliminates noise and focuses on real security threats that matter.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="benefit-item">
+					<div class="benefit-content">
+						<div class="benefit-icon-wrapper">
+							<div class="benefit-icon tools-bg">🔧</div>
+						</div>
+						<div class="benefit-text">
+							<h3 class="benefit-title">Actionable Security Fixes</h3>
+							<p class="benefit-description">
+								Get specific, code-level recommendations that developers can implement immediately.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="benefit-item">
+					<div class="benefit-content">
+						<div class="benefit-icon-wrapper">
+							<div class="benefit-icon protection-bg">🛡️</div>
+						</div>
+						<div class="benefit-text">
+							<h3 class="benefit-title">Continuous Protection</h3>
+							<p class="benefit-description">
+								24/7 monitoring ensures your applications stay secure throughout the development lifecycle.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Blog Section -->
+	<FeaturedBlog />
 </Layout>
 
 <style>
-	/* Global Styles */
-	:global(html) {
-		font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-		background: linear-gradient(135deg, #1a1b3a 0%, #2d1b69 100%);
-		min-height: 100vh;
-		margin: 0;
-		padding: 0;
-	}
-
-	:global(body) {
-		margin: 0;
-		padding: 0;
-		min-height: 100vh;
-		color: white;
-		overflow-x: hidden;
-	}
+	/* Navigation Styles */
 
 	/* Navigation Styles */
 	.navbar {
@@ -120,11 +233,11 @@ import Layout from '../layouts/Layout.astro';
 
 	/* Hero Section */
 	.hero {
-		min-height: 100vh;
+		min-height: 80vh;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: 120px 2rem 60px;
+		padding: 10px 2rem 10px;
 		position: relative;
 	}
 
@@ -146,6 +259,21 @@ import Layout from '../layouts/Layout.astro';
 		text-align: center;
 		position: relative;
 		z-index: 1;
+	}
+
+	/* Hero Background */
+	.hero-background {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: 
+			radial-gradient(circle at 20% 80%, rgba(0, 255, 204, 0.1) 0%, transparent 50%),
+			radial-gradient(circle at 80% 20%, rgba(0, 255, 204, 0.1) 0%, transparent 50%);
+		z-index: 0;
+		opacity: 0.5;
+		pointer-events: none;
 	}
 
 	.hero-title {
@@ -174,40 +302,296 @@ import Layout from '../layouts/Layout.astro';
 		flex-wrap: wrap;
 	}
 
-	.btn {
-		padding: 1rem 2rem;
-		border: none;
-		border-radius: 12px;
-		font-size: 1rem;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		text-decoration: none;
-		display: inline-block;
-		min-width: 160px;
+	/* Features Section */
+	.features {
+		padding: 120px 2rem;
+		position: relative;
+		background: linear-gradient(135deg, #1a1b3a 0%, #2d1b69 100%);
 	}
 
-	.btn-primary {
-		background: linear-gradient(135deg, #00ffcc 0%, #00d4aa 100%);
-		color: #1a1b3a;
-		box-shadow: 0 4px 20px rgba(0, 255, 204, 0.3);
+	.features::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: 
+			radial-gradient(circle at 70% 30%, rgba(0, 255, 204, 0.05) 0%, transparent 50%),
+			radial-gradient(circle at 30% 70%, rgba(0, 255, 204, 0.05) 0%, transparent 50%);
+		pointer-events: none;
 	}
 
-	.btn-primary:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 8px 30px rgba(0, 255, 204, 0.4);
+	.features-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		position: relative;
+		z-index: 1;
 	}
 
-	.btn-secondary {
-		background: rgba(255, 255, 255, 0.1);
-		color: white;
-		border: 1px solid rgba(255, 255, 255, 0.2);
+	.features-header {
+		text-align: center;
+		margin-bottom: 4rem;
+	}
+
+	.features-title {
+		font-size: clamp(2.5rem, 5vw, 4rem);
+		font-weight: 800;
+		margin: 0 0 1.5rem 0;
+		background: linear-gradient(135deg, #ffffff 0%, #00ffcc 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.features-subtitle {
+		font-size: 1.2rem;
+		color: rgba(255, 255, 255, 0.7);
+		max-width: 600px;
+		margin: 0 auto;
+		line-height: 1.6;
+	}
+
+	.features-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 2rem;
+		margin-top: 4rem;
+	}
+
+	.feature-card {
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(0, 255, 204, 0.2);
+		border-radius: 20px;
+		padding: 2.5rem;
+		text-align: center;
 		backdrop-filter: blur(10px);
+		transition: all 0.3s ease;
+		position: relative;
+		overflow: hidden;
 	}
 
-	.btn-secondary:hover {
-		background: rgba(255, 255, 255, 0.2);
-		transform: translateY(-2px);
+	.feature-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: linear-gradient(90deg, #00ffcc, #00d4aa);
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.feature-card:hover {
+		transform: translateY(-5px);
+		border-color: rgba(0, 255, 204, 0.4);
+		box-shadow: 0 20px 40px rgba(0, 255, 204, 0.1);
+	}
+
+	.feature-card:hover::before {
+		opacity: 1;
+	}
+
+	.feature-icon {
+		margin-bottom: 1.5rem;
+		display: flex;
+		justify-content: center;
+	}
+
+	.icon-bg {
+		width: 80px;
+		height: 80px;
+		border-radius: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 2rem;
+		position: relative;
+		background: rgba(0, 255, 204, 0.1);
+		border: 1px solid rgba(0, 255, 204, 0.2);
+	}
+
+	.brain-icon {
+		background: linear-gradient(135deg, rgba(0, 255, 204, 0.15), rgba(0, 212, 170, 0.15));
+	}
+
+	.lightning-icon {
+		background: linear-gradient(135deg, rgba(255, 193, 7, 0.15), rgba(255, 152, 0, 0.15));
+	}
+
+	.target-icon {
+		background: linear-gradient(135deg, rgba(255, 87, 87, 0.15), rgba(255, 64, 129, 0.15));
+	}
+
+	.integration-icon {
+		background: linear-gradient(135deg, rgba(103, 58, 183, 0.15), rgba(156, 39, 176, 0.15));
+	}
+
+	.feature-title {
+		font-size: 1.5rem;
+		font-weight: 700;
+		margin: 0 0 1rem 0;
+		color: white;
+	}
+
+	.feature-description {
+		font-size: 1rem;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.7);
+		margin: 0;
+	}
+
+	/* Benefits Section */
+	.benefits {
+		padding: 120px 2rem;
+		position: relative;
+		background: linear-gradient(135deg, #2d1b69 0%, #1a1b3a 100%);
+	}
+
+	.benefits::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: 
+			radial-gradient(circle at 30% 20%, rgba(0, 255, 204, 0.06) 0%, transparent 40%),
+			radial-gradient(circle at 70% 80%, rgba(0, 255, 204, 0.06) 0%, transparent 40%);
+		pointer-events: none;
+	}
+
+	.benefits-container {
+		max-width: 1000px;
+		margin: 0 auto;
+		position: relative;
+		z-index: 1;
+	}
+
+	.benefits-header {
+		text-align: center;
+		margin-bottom: 5rem;
+	}
+
+	.benefits-title {
+		font-size: clamp(2.5rem, 5vw, 4rem);
+		font-weight: 800;
+		margin: 0 0 1.5rem 0;
+		background: linear-gradient(135deg, #ffffff 0%, #00ffcc 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.benefits-subtitle {
+		font-size: 1.2rem;
+		color: rgba(255, 255, 255, 0.7);
+		max-width: 700px;
+		margin: 0 auto;
+		line-height: 1.6;
+	}
+
+	.benefits-list {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.benefit-item {
+		background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+		border: 1px solid rgba(0, 255, 204, 0.1);
+		border-radius: 16px;
+		padding: 0;
+		backdrop-filter: blur(20px);
+		transition: all 0.4s ease;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.benefit-item::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 4px;
+		background: linear-gradient(180deg, #00ffcc, #00d4aa);
+		opacity: 0;
+		transition: opacity 0.4s ease;
+	}
+
+	.benefit-item:hover {
+		transform: translateX(8px);
+		border-color: rgba(0, 255, 204, 0.25);
+		box-shadow: 0 10px 40px rgba(0, 255, 204, 0.1);
+		background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+	}
+
+	.benefit-item:hover::before {
+		opacity: 1;
+	}
+
+	.benefit-content {
+		display: flex;
+		align-items: center;
+		padding: 2.5rem;
+		gap: 2rem;
+	}
+
+	.benefit-icon-wrapper {
+		flex-shrink: 0;
+	}
+
+	.benefit-icon {
+		width: 70px;
+		height: 70px;
+		border-radius: 16px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 1.8rem;
+		position: relative;
+		border: 2px solid transparent;
+		transition: all 0.3s ease;
+	}
+
+	.rocket-bg {
+		background: linear-gradient(135deg, rgba(0, 255, 204, 0.15), rgba(0, 212, 170, 0.15));
+		border-color: rgba(0, 255, 204, 0.3);
+	}
+
+	.shield-bg {
+		background: linear-gradient(135deg, rgba(255, 193, 7, 0.15), rgba(255, 152, 0, 0.15));
+		border-color: rgba(255, 193, 7, 0.3);
+	}
+
+	.tools-bg {
+		background: linear-gradient(135deg, rgba(255, 87, 87, 0.15), rgba(255, 64, 129, 0.15));
+		border-color: rgba(255, 87, 87, 0.3);
+	}
+
+	.protection-bg {
+		background: linear-gradient(135deg, rgba(103, 58, 183, 0.15), rgba(156, 39, 176, 0.15));
+		border-color: rgba(103, 58, 183, 0.3);
+	}
+
+	.benefit-text {
+		flex: 1;
+	}
+
+	.benefit-title {
+		font-size: 1.5rem;
+		font-weight: 700;
+		margin: 0 0 0.8rem 0;
+		color: white;
+	}
+
+	.benefit-description {
+		font-size: 1.05rem;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.7);
+		margin: 0;
 	}
 
 	/* Responsive Design */
@@ -233,6 +617,58 @@ import Layout from '../layouts/Layout.astro';
 			width: 100%;
 			max-width: 280px;
 		}
+
+		.features {
+			padding: 80px 1rem;
+		}
+
+		.features-grid {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		.feature-card {
+			padding: 2rem;
+		}
+
+		.features-title {
+			font-size: 2.5rem;
+		}
+
+		.features-subtitle {
+			font-size: 1.1rem;
+		}
+
+		.benefits {
+			padding: 80px 1rem;
+		}
+
+		.benefits-list {
+			gap: 1.5rem;
+		}
+
+		.benefit-content {
+			padding: 2rem;
+			gap: 1.5rem;
+		}
+
+		.benefit-icon {
+			width: 60px;
+			height: 60px;
+			font-size: 1.5rem;
+		}
+
+		.benefits-title {
+			font-size: 2.5rem;
+		}
+
+		.benefits-subtitle {
+			font-size: 1.1rem;
+		}
+
+		.hero-background {
+			opacity: 0.3;
+		}
 	}
 
 	@media (max-width: 480px) {
@@ -246,6 +682,63 @@ import Layout from '../layouts/Layout.astro';
 
 		.hero-description {
 			font-size: 1.1rem;
+		}
+
+		.features {
+			padding: 60px 1rem;
+		}
+
+		.features-header {
+			margin-bottom: 3rem;
+		}
+
+		.features-title {
+			font-size: 2rem;
+		}
+
+		.feature-card {
+			padding: 1.5rem;
+		}
+
+		.icon-bg {
+			width: 60px;
+			height: 60px;
+			font-size: 1.5rem;
+		}
+
+		.feature-title {
+			font-size: 1.3rem;
+		}
+
+		.benefits {
+			padding: 60px 1rem;
+		}
+
+		.benefits-header {
+			margin-bottom: 3rem;
+		}
+
+		.benefits-title {
+			font-size: 2rem;
+		}
+
+		.benefit-content {
+			flex-direction: column;
+			text-align: center;
+			padding: 1.5rem;
+			gap: 1rem;
+		}
+
+		.benefit-title {
+			font-size: 1.3rem;
+		}
+
+		.benefit-description {
+			font-size: 1rem;
+		}
+
+		.hero-background {
+			opacity: 0.25;
 		}
 	}
 </style>

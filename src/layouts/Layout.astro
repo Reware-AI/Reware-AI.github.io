@@ -1,3 +1,7 @@
+---
+const { title = "RewareAI - Next-Gen AI-Native Security Scanning" } = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -5,24 +9,67 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>RewareAI - Next-Gen AI-Native Security Scanning</title>
+		<title>{title}</title>
 	</head>
 	<body>
 		<slot />
 	</body>
 </html>
 
-<style>
-	html,
+<style is:global>
+	html {
+		font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+		background: linear-gradient(135deg, #1a1b3a 0%, #2d1b69 100%);
+		min-height: 100vh;
+		margin: 0;
+		padding: 0;
+	}
+	
 	body {
 		margin: 0;
 		padding: 0;
-		width: 100%;
-		min-height: 100%;
-		font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+		min-height: 100vh;
+		color: white;
+		overflow-x: hidden;
 	}
 	
 	* {
 		box-sizing: border-box;
+	}
+    
+    .btn {
+		padding: 1rem 2rem;
+		border: none;
+		border-radius: 12px;
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		text-decoration: none;
+		display: inline-block;
+		min-width: 160px;
+	}
+
+	.btn-primary {
+		background: linear-gradient(135deg, #00ffcc 0%, #00d4aa 100%);
+		color: #1a1b3a;
+		box-shadow: 0 4px 20px rgba(0, 255, 204, 0.3);
+	}
+
+	.btn-primary:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 30px rgba(0, 255, 204, 0.4);
+	}
+
+	.btn-secondary {
+		background: rgba(255, 255, 255, 0.1);
+		color: white;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		backdrop-filter: blur(10px);
+	}
+
+	.btn-secondary:hover {
+		background: rgba(255, 255, 255, 0.2);
+		transform: translateY(-2px);
 	}
 </style>
